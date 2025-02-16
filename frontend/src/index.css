@@ -1,0 +1,15 @@
+:root {
+  --primary-color: #4F46E5;
+  --font-family-base: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  font-family: var(--font-family-base);
+  height: 100%;
+  margin: 0;
+  background-color: #fff;
+}
