@@ -115,6 +115,7 @@ router.get("/profile", authenticate, async (req, res) => {
   }
 });
 
+
 // =======================
 //   GAME CRUD ROUTES
 // =======================
@@ -261,6 +262,7 @@ router.post("/games/:id/join", authenticate, async (req, res) => {
   }
 });
 
+
 // =======================
 // OTHER PROTECTED ROUTES
 // (Settings, My Games, etc.)
@@ -277,5 +279,26 @@ router.get("/messages", authenticate, (req, res) => {
   res.json({ message: "User Messages (Requires Auth)" });
 });
 
+router.get("/dashboard", authenticate, async (req, res) => {
+  try {
+    // Find games created by the user
+    const createdGames = await Game.find({ creatorId: req.user.id });
+    
+    // Find games the user has joined
+    const joinedGames = await Game.find({ playersJoined: req.user.id });
+    
+    // Return a summary object
+    res.json({
+      message: "Dashboard data retrieved successfully",
+      userId: req.user.id,
+      createdGames,
+      joinedGames,
+      // You can add more dashboard data here (e.g., notifications)
+    });
+  } catch (err) {
+    console.error("Dashboard route error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 
 module.exports = router;
