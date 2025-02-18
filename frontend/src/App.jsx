@@ -41,29 +41,24 @@ export default function App() {
         <Navbar />
       )}
 
-      <main
-        className={`flex-1 w-full transition-all duration-300 ${
-          user ? (isSidebarOpen ? "ml-64" : "ml-16") : ""
-        }`}
-      >
-        <div className="w-full">
-          <Routes>
-            <Route path="/" element={user ? <Dashboard /> : <HomePage />} />
-            <Route path="/games" element={<GamesPage />} />
-            <Route path="/game/:id" element={<GameDetailsPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            {user && (
-              <>
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/create-game" element={<CreateGamePage />} />
-                <Route path="/my-games" element={<MyGamesPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/messages" element={<MessagesPage />} />
-              </>
-            )}
-          </Routes>
-        </div>
+      {/* Remove the left margin so that content spans the full width */}
+      <main className="flex-1 w-full transition-all duration-300 px-0">
+        <Routes>
+          <Route path="/" element={user ? <Dashboard /> : <HomePage />} />
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/game/:id" element={<GameDetailsPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          {user && (
+            <>
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/create-game" element={<CreateGamePage />} />
+              <Route path="/my-games" element={<MyGamesPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/messages" element={<MessagesPage />} />
+            </>
+          )}
+        </Routes>
       </main>
     </div>
   );

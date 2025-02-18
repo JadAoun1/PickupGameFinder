@@ -1,9 +1,13 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import basketball5 from "../assets/homepage/basketball5.jpg";
+// Import your logos
+import HoopsConnectLogo from "../assets/HoopsConnect.svg";
+import HoopsConnectWhite from "../assets/HoopsConnectWhite.svg";
 
 export default function LoginPage() {
-  const { login } = useContext(AuthContext); // Get login function from AuthContext
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -15,164 +19,195 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
-  
+
     try {
-      console.log("🔹 Sending login request:", formData);
-  
       await login(formData.email.trim(), formData.password);
-      navigate("/dashboard"); // Redirect to dashboard on success
+      navigate("/dashboard");
     } catch (err) {
-      console.error("Login error:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Login failed. Please try again.");
     }
   };
-  
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Left Column: Branding */}
-      <div className="flex w-full lg:w-1/2 bg-gray-50 items-center justify-center p-6 sm:p-12">
-        <div className="text-center">
-          <span className="text-5xl font-bold tracking-tight" style={{ color: "#4F46E5" }}>
-            HoopsConnect
-          </span>
-          <p className="mt-4 text-xl text-gray-900">Welcome back! Connect with your community.</p>
-        </div>
-      </div>
-
-      {/* Right Column: Login Form */}
-      <div className="flex flex-col justify-center w-full lg:w-1/2 p-6 sm:p-12">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-        </div>
-
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white px-6 py-12 shadow-xl sm:rounded-lg sm:px-12">
-            <form onSubmit={handleLogin} className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="block w-full rounded-md bg-gray-50 px-3 py-1.5 text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-900">
-                  Password
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="block w-full rounded-md bg-gray-50 px-3 py-1.5 text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                  />
-                </div>
-              </div>
-
-              {/* Error Message */}
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-
-              <div className="flex items-center justify-between">
-                <div className="flex gap-3">
-                  <div className="flex h-6 shrink-0 items-center">
-                    <div className="group grid h-4 w-4 grid-cols-1">
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      />
-                      <svg
-                        fill="none"
-                        viewBox="0 0 14 14"
-                        className="pointer-events-none col-start-1 row-start-1 h-3.5 w-3.5 self-center justify-self-center stroke-white group-checked:opacity-100"
-                      >
-                        <path
-                          d="M3 8L6 11L11 3.5"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="opacity-0 group-checked:opacity-100"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <label htmlFor="remember-me" className="block text-sm text-gray-900">
-                    Remember me
-                  </label>
-                </div>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-
-            {/* Social Login Section - Unchanged */}
+    <div className="flex min-h-screen font-main">
+      {/* Left Column: Form Container */}
+      <div className="flex w-full flex-col justify-center px-4 py-12 sm:px-6 lg:w-1/2 lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-sm lg:w-96">
+          <div className="text-center">
+            <img
+              alt="HoopsConnect Logo"
+              src={HoopsConnectLogo}
+              className="mx-auto h-32 w-auto mt-0"
+            />
+            <h2 className="mt-4 text-2xl font-bold tracking-tight text-black">
+              Sign in to your account
+            </h2>
+            <p className="mt-2 text-sm text-grey-text">
+              Welcome back! Connect with your community.
+            </p>
+          </div>
+          <form onSubmit={handleLogin} className="mt-10 space-y-6">
             <div>
-              <div className="relative mt-10">
-                <div aria-hidden="true" className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200" />
-                </div>
-                <div className="relative flex justify-center text-sm font-medium">
-                  <span className="bg-white px-6 text-gray-900">Or continue with</span>
-                </div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-black"
+              >
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border border-black px-3 py-2 shadow-sm placeholder-grey-text focus:outline-none focus:border-main focus:ring focus:ring-main transition-colors duration-200 sm:text-sm"
+                />
               </div>
-              <div className="mt-6 grid grid-cols-2 gap-4">
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-black"
+              >
+                Password
+              </label>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border border-black px-3 py-2 shadow-sm placeholder-grey-text focus:outline-none focus:border-main focus:ring focus:ring-main transition-colors duration-200 sm:text-sm"
+                />
+              </div>
+            </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-grey-text text-main focus:ring-main"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-black"
+                >
+                  Remember me
+                </label>
+              </div>
+              <div className="text-sm">
                 <a
                   href="#"
-                  className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow ring-gray-300 ring-inset hover:bg-gray-50 focus:ring-transparent"
+                  className="font-medium text-main hover:text-main/90"
                 >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
-                    <path d="M12.0003 4.75C13.7703..." fill="#EA4335" />
-                  </svg>
-                  <span className="text-sm font-semibold">Google</span>
-                </a>
-                <a
-                  href="#"
-                  className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow ring-gray-300 ring-inset hover:bg-gray-50 focus:ring-transparent"
-                >
-                  <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true" className="h-5 w-5 fill-[#24292F]">
-                    <path d="M10 0C4.477 0 0 4.484..." />
-                  </svg>
-                  <span className="text-sm font-semibold">GitHub</span>
+                  Forgot your password?
                 </a>
               </div>
             </div>
-
-            <p className="mt-10 text-center text-sm text-gray-500">
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-main py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-main/90 focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2"
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+          {/* Social Login Section */}
+          <div className="mt-10">
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 flex items-center"
+              >
+                <div className="w-full border-t border-grey-text/30" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-2 text-black">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <a
+                href="#"
+                className="flex w-full items-center justify-center gap-3 rounded-md border border-grey-text bg-white py-2 px-4 text-sm font-medium text-black shadow-sm hover:bg-grey-text/10"
+              >
+                <svg viewBox="0 0 48 48" className="h-5 w-5" aria-hidden="true">
+                  <path
+                    fill="#EA4335"
+                    d="M24 9.5c3.9 0 7.4 1.4 10.1 3.8l7.2-7.2C35.6 2.7 30.2 0 24 0 14.4 0 6.3 5.3 3.3 13l7 5.4C12.2 16.2 17.6 12 24 12z"
+                  />
+                  <path
+                    fill="#4285F4"
+                    d="M46.2 24c0-1.5-.1-2.9-.4-4.3H24v8.2h12.6c-.5 2.6-2.2 4.8-4.6 6.3l7 5.4C44.2 35.5 46.2 30.1 46.2 24z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M10.3 28.2c-.8-2.3-1.3-4.8-1.3-7.3s.5-5 .9-7.3L3.3 8.2C1.2 11.3 0 15.2 0 19.5s1.2 8.2 3.3 11.3l7-5.4z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M24 48c6.2 0 11.4-2 15.2-5.4l-7-5.4c-2 1.4-4.5 2.3-8.2 2.3-6.4 0-11.8-4.3-13.7-10l-7 5.4C6.3 42.7 14.4 48 24 48z"
+                  />
+                </svg>
+                <span className="text-sm font-medium">Google</span>
+              </a>
+              <a
+                href="#"
+                className="flex w-full items-center justify-center gap-3 rounded-md border border-grey-text bg-white py-2 px-4 text-sm font-semibold text-black shadow-sm hover:bg-grey-text/10"
+              >
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.31.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 10.017C22 4.484 17.523 0 10 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="text-sm font-medium">GitHub</span>
+              </a>
+            </div>
+            <p className="mt-10 text-center text-sm text-grey-text">
               Don't have an account?{" "}
-              <a href="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
+              <a
+                href="/signup"
+                className="font-medium text-main hover:text-main/90"
+              >
                 Sign up
               </a>
             </p>
           </div>
+        </div>
+      </div>
+      {/* Right Column: Background Image (visible on large screens) */}
+      <div className="relative hidden flex-1 lg:block">
+        <img
+          alt="Signup Background"
+          src={basketball5}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Overlay with primary color */}
+        <div className="absolute inset-0 bg-main opacity-80"></div>
+        {/* White Logo centered */}
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <img
+            alt="HoopsConnect White Logo"
+            src={HoopsConnectWhite}
+            className="h-128 w-auto"
+          />
         </div>
       </div>
     </div>

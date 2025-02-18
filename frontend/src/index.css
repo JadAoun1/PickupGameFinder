@@ -1,6 +1,11 @@
+
 :root {
-  --primary-color: #4F46E5;
-  --font-family-base: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --main-color: #4abc62;
+  --main-font: "Prosto", sans-serif;
+  --grey-bg: #0f1118; /* Dark grey for component backgrounds */
+  --grey-text: #6B7280; /* Grey for text */
+  --white: #FFFFFF;
+  --black: #000000;
 }
 
 @tailwind base;
@@ -8,8 +13,8 @@
 @tailwind utilities;
 
 html, body {
-  font-family: var(--font-family-base);
+  font-family: var(--main-font);
   height: 100%;
   margin: 0;
-  background-color: #fff;
+  background-color: var(--white);
 }

@@ -48,11 +48,14 @@ export default function Sidebar({ isOpen, setIsOpen }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-screen bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${
-        isOpen ? "w-64" : "w-16"
-      }`}
+      className={`
+        fixed top-0 left-0 h-screen 
+        bg-white border-r border-grey-text/30 
+        flex flex-col transition-all duration-300 
+        font-main ${isOpen ? "w-64" : "w-16"}
+      `}
     >
-      <div className="relative flex items-center justify-between px-4 py-4 border-b border-gray-200">
+      <div className="relative flex items-center justify-between px-4 py-4 border-b border-grey-text/30">
         {isOpen && (
           <img
             alt="Basketball Logo"
@@ -62,12 +65,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         )}
         <button
           onClick={toggleSidebar}
-          className="absolute top-2 right-2 p-2 focus:outline-none"
+          className="absolute top-2 right-2 p-2 focus:outline-none text-black"
         >
           {isOpen ? (
-            <XMarkIcon className="h-6 w-6 text-gray-700" />
+            <XMarkIcon className="h-6 w-6" />
           ) : (
-            <Bars3Icon className="h-6 w-6 text-gray-700" />
+            <Bars3Icon className="h-6 w-6" />
           )}
         </button>
       </div>
@@ -79,11 +82,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <Link
                 to={item.href}
                 className={classNames(
-                  "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold",
+                  "text-black hover:bg-grey-text/10"
                 )}
               >
                 <item.icon
-                  className="h-6 w-6 text-gray-400"
+                  className="h-6 w-6 text-grey-text"
                   aria-hidden="true"
                 />
                 {isOpen && <span>{item.name}</span>}
@@ -95,9 +99,10 @@ export default function Sidebar({ isOpen, setIsOpen }) {
 
       {user && (
         <div
-          className={`px-4 py-4 border-t border-gray-200 flex items-center justify-between ${
-            isOpen ? "block" : "hidden"
-          }`}
+          className={`
+            px-4 py-4 border-t border-grey-text/30 
+            flex items-center justify-between ${isOpen ? "block" : "hidden"}
+          `}
         >
           <Link to="/profile" className="flex items-center gap-x-3">
             <img
@@ -109,15 +114,15 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               className="h-10 w-10 rounded-full"
             />
             <div>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-black">
                 {user.username || "Your Name"}
               </p>
-              <p className="text-xs text-gray-500">View profile</p>
+              <p className="text-xs text-grey-text">View profile</p>
             </div>
           </Link>
           <button
             onClick={handleLogout}
-            className="ml-2 rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white hover:bg-indigo-500 focus:outline-none"
+            className="ml-2 rounded bg-main px-2 py-1 text-xs font-semibold text-white hover:bg-main/90 focus:outline-none"
           >
             Sign Out
           </button>

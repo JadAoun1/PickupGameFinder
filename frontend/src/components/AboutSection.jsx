@@ -26,14 +26,16 @@ const features = [
 
 export default function AboutSection() {
   return (
-    <div className="bg-gray-900 py-24 sm:py-32">
+    <div className="bg-grey-bg py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base/7 font-semibold text-indigo-400">About HoopsConnect</h2>
-          <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-balance">
+          <h2 className="text-base/7 font-semibold font-main text-main">
+            About HoopsConnect
+          </h2>
+          <p className="mt-2 text-4xl font-semibold font-main tracking-tight text-white sm:text-5xl">
             Connecting Hoop Enthusiasts Everywhere
           </p>
-          <p className="mt-6 text-lg/8 text-gray-300">
+          <p className="mt-6 text-lg/8 font-main text-grey-text">
             At HoopsConnect, our passion is uniting basketball lovers. Our platform helps you find teammates, join local pick-up games, and stay inspired by the community—all in one place.
           </p>
         </div>
@@ -41,11 +43,11 @@ export default function AboutSection() {
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
             {features.map((feature) => (
               <div key={feature.name} className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base/7 font-semibold text-white">
-                  <feature.icon aria-hidden="true" className="size-5 flex-none text-indigo-400" />
+                <dt className="flex items-center gap-x-3 text-base/7 font-semibold font-main text-white">
+                  <feature.icon aria-hidden="true" className="h-5 w-5 flex-none text-main" />
                   {feature.name}
                 </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base/7 text-gray-300">
+                <dd className="mt-4 flex flex-auto flex-col text-base/7 font-main text-grey-text">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </div>

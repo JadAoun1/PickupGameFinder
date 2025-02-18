@@ -7,7 +7,8 @@ import basketball5 from "../assets/homepage/basketball5.jpg";
 
 export default function LandingPage() {
   return (
-    <div className="relative isolate">
+    <div className="relative isolate w-full font-main">
+      {/* Background Blur Element */}
       <div
         className="absolute top-0 right-0 left-1/2 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
         aria-hidden="true"
@@ -20,70 +21,78 @@ export default function LandingPage() {
           }}
         />
       </div>
-      <div className="overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 pt-36 pb-32 sm:pt-60 lg:px-8 lg:pt-32">
-          <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-            <div className="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
-              <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl">
-                Connecting Hoopers Worldwide
-              </h1>
-              <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl lg:max-w-none">
-                HoopsConnect is your go-to platform for finding teammates, joining local pick-up games, and sharing your passion for basketball. Whether you're looking to connect with fellow enthusiasts or organize the next big game, we bring the hoops community together.
-              </p>
-              <div className="mt-10 flex items-center gap-x-6">
-                <a
-                  href="#"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Get started
-                </a>
-              </div>
+
+      {/* Constrain the main content width with a larger max width */}
+      <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 pt-36 pb-32 sm:pt-60 lg:pt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column: Text */}
+          <div className="flex flex-col justify-center text-left">
+            <h1 className="text-5xl font-semibold tracking-tight text-black sm:text-7xl">
+              Connecting Hoopers Worldwide
+            </h1>
+            <p className="mt-8 text-lg font-medium text-grey-text sm:text-xl">
+              HoopsConnect is your go-to platform for finding teammates, joining local pick-up games, and sharing your passion for basketball. Whether you're looking to connect with fellow enthusiasts or organize the next big game, we bring the hoops community together.
+            </p>
+            <div className="mt-10">
+              <a
+                href="#"
+                className="inline-block rounded-md bg-main px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-main/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main"
+              >
+                Get started
+              </a>
             </div>
-            <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
-              <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
+          </div>
+
+          {/* Right Column: Images */}
+          <div className="flex justify-end">
+            <div className="flex gap-8">
+              {/* First Column */}
+              <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:pt-80 lg:pt-36 xl:pt-80">
                 <div className="relative">
                   <img
                     src={basketball1}
                     alt="People playing basketball"
-                    className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                    className="aspect-[2/3] w-full rounded-xl bg-black/5 object-cover shadow-lg"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"></div>
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset" />
                 </div>
               </div>
-              <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
+              {/* Second Column */}
+              <div className="mr-auto w-44 flex-none space-y-8 sm:pt-52 lg:pt-36">
                 <div className="relative">
                   <img
                     src={basketball2}
                     alt="People playing basketball"
-                    className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                    className="aspect-[2/3] w-full rounded-xl bg-black/5 object-cover shadow-lg"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"></div>
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset" />
                 </div>
                 <div className="relative">
                   <img
                     src={basketball3}
                     alt="People playing basketball"
-                    className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                    className="aspect-[2/3] w-full rounded-xl bg-black/5 object-cover shadow-lg"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"></div>
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset" />
                 </div>
               </div>
+              {/* Third Column */}
               <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                 <div className="relative">
                   <img
                     src={basketball4}
                     alt="People playing basketball"
-                    className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                    className="aspect-[2/3] w-full rounded-xl bg-black/5 object-cover shadow-lg"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"></div>
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset" />
                 </div>
                 <div className="relative">
                   <img
                     src={basketball5}
                     alt="People playing basketball"
-                    className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                    className="aspect-[2/3] w-full rounded-xl bg-black/5 object-cover shadow-lg"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"></div>
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset" />
                 </div>
               </div>
             </div>
