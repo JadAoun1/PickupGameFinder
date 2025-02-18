@@ -45,23 +45,23 @@ router.get("/", (req, res) => {
 // Signup
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
+  const normalizedEmail = email.toLowerCase();
+
   try {
-    let existingUser = await User.findOne({ email });
+    let existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return res.status(400).json({ message: "Email already in use" });
     }
-    const newUser = new User({ username, email, password });
+
+    // Remove explicit hashing here; let the pre-save hook handle it
+    const newUser = new User({ username, email: normalizedEmail, password });
     await newUser.save();
 
     const token = generateToken(newUser);
     return res.status(201).json({
       message: "User created successfully",
       token,
-      user: {
-        id: newUser._id,
-        username: newUser.username,
-        email: newUser.email,
-      },
+      user: { id: newUser._id, username: newUser.username, email: newUser.email },
     });
   } catch (err) {
     return res.status(500).json({ message: "Server error", error: err.message });
@@ -71,25 +71,27 @@ router.post("/signup", async (req, res) => {
 // Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ email });
+    // Find user by email (ensure it's case-insensitive)
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
+
+    // Compare entered password with hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    // Generate JWT token
     const token = generateToken(user);
+
     return res.json({
       message: "Login successful",
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
+      user: { id: user._id, username: user.username, email: user.email },
     });
   } catch (err) {
     return res.status(500).json({ message: "Server error", error: err.message });
@@ -109,12 +111,9 @@ router.get("/profile", authenticate, async (req, res) => {
     }
     return res.json(user);
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    return res.status(500).json({ message: "Server error", error: err.message });
   }
 });
-
 
 // =======================
 //   GAME CRUD ROUTES
@@ -140,7 +139,6 @@ router.post("/games", authenticate, async (req, res) => {
     const savedGame = await newGame.save();
     res.status(201).json(savedGame);
   } catch (err) {
-    console.error("Create game error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -155,7 +153,6 @@ router.get("/games", async (req, res) => {
     const games = await Game.find().sort({ date: 1 });
     res.json(games);
   } catch (err) {
-    console.error("Get games error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -173,7 +170,6 @@ router.get("/games/:id", async (req, res) => {
     }
     res.json(game);
   } catch (err) {
-    console.error("Get game error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -206,7 +202,6 @@ router.put("/games/:id", authenticate, async (req, res) => {
     const updatedGame = await game.save();
     res.json(updatedGame);
   } catch (err) {
-    console.error("Update game error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -231,7 +226,6 @@ router.delete("/games/:id", authenticate, async (req, res) => {
     await game.remove();
     res.json({ message: "Game deleted successfully" });
   } catch (err) {
-    console.error("Delete game error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -257,11 +251,9 @@ router.post("/games/:id/join", authenticate, async (req, res) => {
     const updatedGame = await game.save();
     res.json(updatedGame);
   } catch (err) {
-    console.error("Join game error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
-
 
 // =======================
 // OTHER PROTECTED ROUTES
@@ -293,10 +285,8 @@ router.get("/dashboard", authenticate, async (req, res) => {
       userId: req.user.id,
       createdGames,
       joinedGames,
-      // You can add more dashboard data here (e.g., notifications)
     });
   } catch (err) {
-    console.error("Dashboard route error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });

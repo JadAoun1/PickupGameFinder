@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
@@ -18,16 +18,36 @@ import MessagesPage from "./pages/MessagesPage";
 export default function App() {
   const { user } = useContext(AuthContext);
 
+  // Persist sidebar state if user is logged in
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    if (user) {
+      const savedState = localStorage.getItem("sidebarOpen");
+      return savedState ? JSON.parse(savedState) : false;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("sidebarOpen", JSON.stringify(isSidebarOpen));
+    }
+  }, [isSidebarOpen, user]);
+
   return (
-    // Outer container now takes full viewport width and height
     <div className="flex flex-col min-h-screen w-full">
-      {user ? <Sidebar /> : <Navbar />}
-      {/* The main area adjusts based on whether the sidebar is visible */}
-      <main className={`flex-1 w-full transition-all duration-300 ${user ? "ml-64" : ""}`}>
-        {/* This common wrapper ensures that each routed page spans the full width */}
+      {user ? (
+        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      ) : (
+        <Navbar />
+      )}
+
+      <main
+        className={`flex-1 w-full transition-all duration-300 ${
+          user ? (isSidebarOpen ? "ml-64" : "ml-16") : ""
+        }`}
+      >
         <div className="w-full">
           <Routes>
-            {/* Render Dashboard if user is logged in, otherwise HomePage */}
             <Route path="/" element={user ? <Dashboard /> : <HomePage />} />
             <Route path="/games" element={<GamesPage />} />
             <Route path="/game/:id" element={<GameDetailsPage />} />

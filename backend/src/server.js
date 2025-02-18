@@ -15,6 +15,9 @@ app.use("/api", routes);
 // Serve static files from the built React app folder (assuming it's in frontend/dist)
 app.use(express.static(path.join(__dirname, "frontend", "dist")));
 
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
+
 // Catch-all route: serve index.html for all requests not starting with /api
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));

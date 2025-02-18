@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import {
   HomeIcon,
@@ -35,9 +35,15 @@ function classNames(...classes) {
 export default function Sidebar({ isOpen, setIsOpen }) {
   const { user, logout } = useContext(AuthContext);
   const navigation = user ? privateNavigation : publicNavigation;
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/"); // Redirect to the landing page after logout
   };
 
   return (
@@ -49,11 +55,10 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       <div className="relative flex items-center justify-between px-4 py-4 border-b border-gray-200">
         {isOpen && (
           <img
-          alt="Basketball Logo"
-          src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png"
-          className="h-8 w-auto"
-        />
-        
+            alt="Basketball Logo"
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png"
+            className="h-8 w-auto"
+          />
         )}
         <button
           onClick={toggleSidebar}
@@ -77,7 +82,10 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                   "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
                 )}
               >
-                <item.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+                <item.icon
+                  className="h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                />
                 {isOpen && <span>{item.name}</span>}
               </Link>
             </li>
@@ -86,20 +94,29 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       </nav>
 
       {user && (
-        <div className={`px-4 py-4 border-t border-gray-200 flex items-center justify-between ${isOpen ? "block" : "hidden"}`}>
+        <div
+          className={`px-4 py-4 border-t border-gray-200 flex items-center justify-between ${
+            isOpen ? "block" : "hidden"
+          }`}
+        >
           <Link to="/profile" className="flex items-center gap-x-3">
             <img
               alt="Your Profile"
-              src={user.profileImage || "https://www.gravatar.com/avatar/?d=mp&f=y"}
+              src={
+                user.profileImage ||
+                "https://www.gravatar.com/avatar/?d=mp&f=y"
+              }
               className="h-10 w-10 rounded-full"
             />
             <div>
-              <p className="text-sm font-medium text-gray-900">{user.username || "Your Name"}</p>
+              <p className="text-sm font-medium text-gray-900">
+                {user.username || "Your Name"}
+              </p>
               <p className="text-xs text-gray-500">View profile</p>
             </div>
           </Link>
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="ml-2 rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white hover:bg-indigo-500 focus:outline-none"
           >
             Sign Out
